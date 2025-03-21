@@ -1,60 +1,123 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Big Games DevBlog</title>
-    <link rel="icon" href="https://bigblog-storage.s3.us-east-1.amazonaws.com/icon_PS_99_Booster_Cards_a4b87ce86c.png" type="image/x-icon">
+    <link rel="icon" href="https://i.imgur.com/tO0aEyM.png" type="image/x-icon">
     <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --bg-gradient-start: #f5f5f5;
+            --bg-gradient-end: #fff;
+            --text-color: #333;
+            --text-secondary: #666;
+            --text-muted: #888;
+            --container-bg: white;
+            --border-color: #eee;
+            --accent-color: #FF9D43;
+            --accent-hover: #e58935;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --shadow-hover: rgba(0, 0, 0, 0.1);
+            --accent-shadow: rgba(255, 157, 67, 0.3);
+            --accent-shadow-hover: rgba(255, 157, 67, 0.4);
+            --discord-color: #5865F2;
+            --discord-hover: #4752c4;
+            --discord-shadow: rgba(88, 101, 242, 0.3);
+            --disclaimer-bg: rgba(255, 157, 67, 0.1);
+            --contributors-bg: rgba(255, 255, 255, 0.7);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --bg-gradient-start: #121212;
+            --bg-gradient-end: #202020;
+            --text-color: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #909090;
+            --container-bg: #2a2a2a;
+            --border-color: #333;
+            --accent-color: #FF9D43;
+            --accent-hover: #ffb06c;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --shadow-hover: rgba(0, 0, 0, 0.3);
+            --accent-shadow: rgba(255, 157, 67, 0.2);
+            --accent-shadow-hover: rgba(255, 157, 67, 0.3);
+            --discord-color: #5865F2;
+            --discord-hover: #6b78ff;
+            --discord-shadow: rgba(88, 101, 242, 0.2);
+            --disclaimer-bg: rgba(255, 157, 67, 0.15);
+            --contributors-bg: rgba(50, 50, 50, 0.5);
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-color);
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f5f5;
+            background-color: var(--bg-color);
+            background-image: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
+            background-attachment: fixed;
+            transition: all 0.3s ease;
         }
         
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 3px solid var(--accent-color);
+            position: relative;
         }
         
         .header h1 {
-            color: #FF9D43;
-            font-size: 2.5rem;
+            color: var(--accent-color);
+            font-size: 2.8rem;
             margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            font-weight: 700;
         }
         
         .header p {
-            font-size: 1.2rem;
-            color: #666;
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
         }
         
         .blog-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 30px;
+            background-color: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            padding: 40px;
+            margin-bottom: 40px;
+            transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .blog-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px var(--shadow-hover);
         }
         
         .blog-header {
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
             text-align: center;
         }
         
         .blog-header h2 {
-            color: #FF9D43;
-            margin-bottom: 10px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 2.2rem;
         }
         
         .blog-date {
-            color: #888;
+            color: var(--text-muted);
             font-style: italic;
+            font-size: 1.1rem;
         }
         
         /* Center everything in the blog content */
@@ -66,23 +129,35 @@
         .blog-content h1, .blog-content h2, .blog-content h3,
         .blog-content h4, .blog-content h5, .blog-content h6 {
             text-align: center !important;
-            margin: 20px auto !important;
+            margin: 30px auto 20px !important;
             width: 100% !important;
+            font-weight: 600;
+            color: var(--text-color);
         }
         
         /* Center all paragraphs */
         .blog-content p {
             text-align: center !important;
-            margin: 10px auto !important;
+            margin: 15px auto !important;
             width: 100% !important;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-color);
         }
         
         /* Center all images */
         .blog-content img {
             display: block !important;
-            margin: 20px auto !important;
+            margin: 25px auto !important;
             max-width: 100% !important;
             height: auto !important;
+            border-radius: 8px;
+            box-shadow: 0 3px 15px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .blog-content img:hover {
+            transform: scale(1.02);
         }
         
         /* Center all divs */
@@ -96,19 +171,39 @@
         .blog-content a {
             text-align: center !important;
             display: inline-block !important;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .blog-content a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
         }
         
         /* Special styling for the "Raid Bosses" heading */
         .blog-content h2.raid-bosses {
-            color: #FF9D43;
-            font-size: 2rem;
+            color: var(--accent-color);
+            font-size: 2.2rem;
             text-align: center !important;
             width: 100% !important;
+            padding: 10px 0;
+            position: relative;
+        }
+        
+        .blog-content h2.raid-bosses::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--accent-color);
+            margin: 10px auto 0;
         }
         
         /* Style the main blog title */
         .blog-content h1.main-title {
-            color: #FF9D43;
+            color: var(--accent-color);
             font-size: 2.5rem;
             text-align: center !important;
             width: 100% !important;
@@ -124,7 +219,7 @@
         
         /* Style the date */
         .blog-content p.date {
-            color: #888;
+            color: var(--text-muted);
             font-style: italic;
             margin: 10px auto 30px auto !important;
             width: 100% !important;
@@ -134,24 +229,27 @@
         /* Line separator */
         .blog-content hr {
             border: 0;
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--border-color);
             margin: 30px auto;
             width: 100%;
         }
         
         .loading-container, .error-container {
             text-align: center;
-            padding: 50px 0;
+            padding: 70px 0;
+            background: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--shadow-color);
         }
         
         .loading-spinner {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #FF9D43;
+            border: 6px solid var(--border-color);
+            border-top: 6px solid var(--accent-color);
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 25px auto;
         }
         
         @keyframes spin {
@@ -161,61 +259,217 @@
         
         .footer {
             text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            color: #888;
+            margin-top: 50px;
+            padding: 30px 0;
+            border-top: 3px solid var(--accent-color);
+            color: var(--text-muted);
+            font-size: 1.05rem;
         }
         
-        .refresh-button {
-            background-color: #FF9D43;
+        .disclaimer {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--disclaimer-bg);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .button {
+            background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-            margin-top: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px var(--accent-shadow);
+            outline: none;
         }
         
-        .refresh-button:hover {
-            background-color: #e58935;
+        .button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px var(--accent-shadow-hover);
+        }
+        
+        .button:active {
+            transform: translateY(0);
+        }
+        
+        /* Dark mode toggle button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--container-bg);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            border: 2px solid var(--accent-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-toggle .icon {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+            }
         }
         
         /* Credits section styling */
         .credits {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
             text-align: center;
         }
         
+        .credits-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+        
+        .creator {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .creator-name {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+        
         .social-links {
-            margin-top: 10px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .social-links a {
-            display: inline-block;
-            margin: 0 10px;
-            color: #FF9D43;
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--container-bg);
+            border-radius: 50px;
+            color: var(--accent-color);
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px var(--shadow-color);
         }
         
         .social-links a:hover {
-            color: #e58935;
-            text-decoration: underline;
+            color: white;
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--accent-shadow);
         }
         
         .social-icon {
-            margin-right: 5px;
-            vertical-align: middle;
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .update-time {
+            font-style: italic;
+            margin-top: 15px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* Donate button */
+        .donate-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: var(--discord-color);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px var(--discord-shadow);
+        }
+        
+        .donate-button:hover {
+            background-color: var(--discord-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px var(--discord-shadow);
+        }
+        
+        /* Contributors section */
+        .contributors {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--contributors-bg);
+        }
+        
+        .contributors-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+        
+        .contributor-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .contributor {
+            padding: 5px 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px var(--shadow-color);
+        }
+        
+        /* Version info */
+        .version-info {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
         }
     </style>
 </head>
 <body>
+    <!-- Theme toggle button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+        <span class="icon" id="themeIcon">🌙</span>
+    </button>
+
     <div class="header">
         <h1>PS99 & Pets-GO DevBlogs</h1>
         <p>Early devblogs and sneak peeks for PS99 and Pets GO!</p>
@@ -225,30 +479,84 @@
         <div class="loading-container">
             <div class="loading-spinner"></div>
             <p>Loading latest devblog...</p>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 10px;">Please wait while we fetch the newest updates</p>
         </div>
     </div>
     
     <div class="footer">
-        <p>This site is not affiliated with Big Games. This site is made to provide early access to PS99 and Pets Go devblogs!</p>
-        <button class="refresh-button" onclick="fetchLatestDevblog()">Check for Updates</button>
+        <div class="disclaimer">
+            <p>This site is not affiliated with or endorsed by Big Games. This site is maintained by MEE69 to provide early access to PS99 and Pets GO devblogs!</p>
+        </div>
+        
+        <button class="button refresh-button" onclick="fetchLatestDevblog()">
+            Check for Updates
+        </button>
         
         <!-- Credits section -->
         <div class="credits">
-            <p>Created by .ggbiggamesio</p>
+            <p class="credits-title">SITE INFO</p>
+            <p class="creator">Created with ❤️ by <span class="creator-name">MEE69</span></p>
+            
             <div class="social-links">
-                <a href="https://discord.gg/[DISCORDLINK]" target="_blank">
-                    <span class="social-icon">🎮</span> Discord
+                <a href="https://discord.gg/4f8BPbynNt" target="_blank">
+                    <span class="social-icon">🎮</span> Join our Discord
                 </a>
-                <a href="https://x.com/[TWITTERLINK]" target="_blank">
-                    <span class="social-icon">🐦</span> Twitter
+                <a href="https://x.com/petsim_99leaks" target="_blank">
+                    <span class="social-icon">🐦</span> Follow on Twitter
                 </a>
             </div>
+            
+            <!-- Contributor section -->
+            <div class="contributors">
+                <p class="contributors-title">SPECIAL THANKS</p>
+                <div class="contributor-list">
+                    <span class="contributor">Fuglen.</span>
+                    <span class="contributor">LakePolar</span>
+                    <span class="contributor">Megan01Life</span>
+                </div>
+            </div>
+            
+            <p class="update-time">Last checked for updates: <span id="last-update-time">Just now</span></p>
+            <p class="version-info">Version 2.2.0</p>
         </div>
     </div>
 
     <script>
+        // Theme toggle functionality
+        // Theme toggle functionality
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const htmlElement = document.documentElement;
+
+// Initialize theme - always starts in light mode
+function initTheme() {
+    // Always set light theme by default
+    htmlElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('theme', 'light');
+    updateThemeIcon('light');
+}
+
+// Update the icon based on current theme
+function updateThemeIcon(theme) {
+    themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+// Toggle theme when button is clicked
+themeToggle.addEventListener('click', () => {
+    const currentTheme = htmlElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    htmlElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+});
+
+// Initialize theme on page load
+initTheme();
+
+
         // API endpoint
-        const API_URL = 'https://blogapi.biggames.io/api/articles/133?populate=*';
+        const API_URL = 'https://blogapi.biggames.io/api/articles/2016?populate=*';
         
         // Function to fetch the devblog data
         async function fetchLatestDevblog() {
@@ -259,6 +567,7 @@
                 <div class="loading-container">
                     <div class="loading-spinner"></div>
                     <p>Loading latest devblog...</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 10px;">Please wait while we fetch the newest updates</p>
                 </div>
             `;
             
@@ -283,6 +592,9 @@
                     // No content available
                     showNoContentMessage();
                 }
+                
+                // Update the last checked time
+                updateLastCheckedTime();
             } catch (error) {
                 console.error('Error fetching devblog:', error);
                 
@@ -291,9 +603,13 @@
                     <div class="error-container">
                         <p>Oops! Something went wrong while fetching the latest devblog.</p>
                         <p>Error: ${error.message}</p>
-                        <button class="refresh-button" onclick="fetchLatestDevblog()">Try Again</button>
+                        <button class="button refresh-button" onclick="fetchLatestDevblog()">Try Again</button>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 20px;">If this problem persists, please join our Discord for support.</p>
                     </div>
                 `;
+                
+                // Still update the last checked time
+                updateLastCheckedTime();
             }
         }
         
@@ -324,7 +640,6 @@
                 // Apply special styling to "Raid Bosses" heading
                 if (heading.textContent.trim().includes('Raid Bosses')) {
                     heading.className = 'raid-bosses';
-                    heading.style.color = '#FF9D43';
                 }
             });
             
@@ -412,7 +727,7 @@
                     
                     // Special styling for "Raid Bosses" heading
                     if (heading.textContent.trim().includes('Raid Bosses')) {
-                        heading.style.color = '#FF9D43';
+                        heading.style.color = 'var(--accent-color)';
                         heading.style.fontSize = '2rem';
                     }
                 });
@@ -433,9 +748,10 @@
             
             contentElement.innerHTML = `
                 <div class="error-container">
-                    <p>No new devblog available at the moment.</p>
-                    <p>Please check back later for updates!</p>
-                    <button class="refresh-button" onclick="fetchLatestDevblog()">Check Again</button>
+                    <p style="font-size: 1.2rem; font-weight: 600; margin-bottom: 15px;">No new devblog available at the moment.</p>
+                    <p>The team is hard at work on new content. Check back soon for the latest updates!</p>
+                    <button class="button refresh-button" onclick="fetchLatestDevblog()">Check Again</button>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 20px;">Follow us on Twitter for notifications when new content drops.</p>
                 </div>
             `;
         }
@@ -446,6 +762,13 @@
             
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+        
+        // Function to update the last checked time
+        function updateLastCheckedTime() {
+            const now = new Date();
+            const timeElement = document.getElementById('last-update-time');
+            timeElement.textContent = now.toLocaleTimeString();
         }
         
         // Initial fetch when page loads
