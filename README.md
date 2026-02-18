@@ -1,34 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Stream Player</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            background-color: #000;
-        }
-        iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Roblox Inventory Type 40 Viewer</title>
+<style>
+  body { background:#111; color:#eee; font-family:Arial; text-align:center; }
+  .item { background:#222; margin:10px auto; padding:10px; width:80%; border-radius:8px; }
+</style>
 </head>
 <body>
-    <iframe 
-        src="https://8k.lifekora.com/albaplayer/live-1/?serv=1" 
-        allowfullscreen="true" 
-        scrolling="no">
-    </iframe>
+
+<h1>User 205430552 — Asset Type 40</h1>
+<button onclick="load()">Fetch Once</button>
+
+<div id="out"></div>
+
+<script>
+async function load() {
+  const out = document.getElementById("out");
+  out.textContent = "Loading...";
+
+  const url = "https://inventory.roblox.com/v2/users/205430552/inventory/40?cursor=&limit=100&sortOrder=Desc";
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (!data.data || data.data.length === 0) {
+      out.textContent = "No items or inventory private.";
+      return;
+    }
+
+    out.innerHTML = "";
+
+    data.data.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <b>${item.name}</b><br>
+        Asset ID: ${item.assetId}<br>
+        Type: ${item.assetType}<br>
+        Created: ${item.created}
+      `;
+      out.appendChild(div);
+    });
+
+  } catch (err) {
+    out.textContent = "Request failed (CORS or private inventory).";
+    console.error(err);
+  }
+}
+</script>
 
 </body>
 </html>
