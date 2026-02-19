@@ -114,7 +114,7 @@ body { margin:0; font-family:system-ui,Segoe UI,Arial; background:#0b0f14; color
         <p>Technologies used:</p>
         <ul>
           <li>HTML, CSS, JS for frontend dashboard</li>
-          <li>Cloudflare Worker backend to fetch inventory and rbxg leaks asset info</li>
+          <li>Cloudflare Worker backend to fetch inventory and rblx asset info</li>
           <li>LocalStorage for pinned creators</li>
           <li>Modern CSS Grid and Flexbox for responsive UI</li>
         </ul>
